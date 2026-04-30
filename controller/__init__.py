@@ -1,1 +1,1 @@
-from controller.search import Search
+from controller.search import SearchAgent
