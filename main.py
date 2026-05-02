@@ -8,20 +8,19 @@ from view.grid_view import GridView
 from view.tree_view import TreeView
 
 
-def main(size: int = 10, density: float = 0.25,
-         method: str = 'bfs', delay: float = 0.15):
+def main(size: int = 15, method: str = 'bfs', delay: float = 0.15):
 
     # ------------------------------------------------------------------ #
     # 1. Build the state space
     # ------------------------------------------------------------------ #
-    grid = Grid(size=size, obstacle_density=density)
+    grid = Grid(size=size)
     grid.generate()
 
     graph = Graph()
     graph.build_from_grid(grid)
 
     print(f"Grid      : {size}x{size}")
-    print(f"Obstacles : {density:.0%}")
+    print("Layout    : Maze corridors")
     print(f"Nodes     : {graph.node_count}  |  Edges: {graph.edge_count}")
     print(f"Start     : {grid.start}  |  Goal: {grid.goal}")
     print(f"Method    : {method.upper()}")
@@ -109,7 +108,7 @@ def main(size: int = 10, density: float = 0.25,
         tree_view.draw(current=grid.goal, path=path)
 
         ax_grid.set_title(
-            f"2D Grid — {method.upper()} | Path length: {len(path)-1}",
+            f"Maze Grid — {method.upper()} | Path length: {len(path)-1}",
             fontsize=11, fontweight="bold",
         )
         ax_tree.set_title(
@@ -125,7 +124,7 @@ def main(size: int = 10, density: float = 0.25,
         tree_view.draw()
 
         ax_grid.set_title(
-            f"2D Grid — {method.upper()} | No path exists",
+            f"Maze Grid — {method.upper()} | No path exists",
             fontsize=11, fontweight="bold",
         )
         ax_tree.set_title(
@@ -142,17 +141,17 @@ def main(size: int = 10, density: float = 0.25,
 # ------------------------------------------------------------------ #
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="Uninformed search on a 2-D grid (BFS / DFS)"
+        description="Uninformed search through maze corridors (BFS / DFS)"
     )
-    parser.add_argument("--size",    type=int,   default=10,
-                        help="Grid size NxN (default: 10)")
-    parser.add_argument("--density", type=float, default=0.25,
-                        help="Obstacle density 0–1 (default: 0.25)")
+    parser.add_argument("--size",    type=int,   default=15,
+                        help="Maze size NxN, minimum 5 (default: 15)")
     parser.add_argument("--method",  choices=['bfs', 'dfs'], default='bfs',
                         help="Search method: bfs or dfs (default: bfs)")
     parser.add_argument("--delay",   type=float, default=0.15,
                         help="Animation delay in seconds (default: 0.15)")
     args = parser.parse_args()
 
-    main(size=args.size, density=args.density,
-         method=args.method, delay=args.delay)
+    if args.size < 5:
+        parser.error("--size must be at least 5 for maze generation")
+
+    main(size=args.size, method=args.method, delay=args.delay)

@@ -30,7 +30,7 @@ class GridView:
                          drawn with a dashed highlight border
         """
         self.ax.clear()
-        self.ax.set_title("2D Grid", fontsize=12, fontweight="bold")
+        self.ax.set_title("Maze Grid", fontsize=12, fontweight="bold")
         self.ax.set_xlim(0, grid.size)
         self.ax.set_ylim(0, grid.size)
         self.ax.set_aspect("equal")
