@@ -1,6 +1,6 @@
 # Search Methods Demo
 
-This small project demonstrates grid generation and graph building.
+This small project demonstrates maze generation, graph building, and search.
 
 Requirements:
 
@@ -12,13 +12,12 @@ Install dependencies (WSL):
 ```bash
 python3 -m venv .venv
 # then install packages
-./venv/bin/pip install -r requirements.txt
+.venv/bin/pip install -r requirements.txt
 ```
 
 Run the demo:
 
 ```bash
 # from the project root (WSL)
-python3 main.py --size \<INT\> --density \<FLOAT BETWEEN 0-1\>
+.venv/bin/python main.py --size <INT> --method bfs
 ```
-
